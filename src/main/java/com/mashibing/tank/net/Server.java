@@ -14,6 +14,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+/**
+ * @author meng
+ */
 public class Server {
 	public static ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	
@@ -90,7 +93,6 @@ class ServerChildHandler extends ChannelInboundHandlerAdapter { //SimpleChannleI
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();
-		//ɾ�������쳣�Ŀͻ���channle�����ر�����
 		Server.clients.remove(ctx.channel());
 		ctx.close();
 	}

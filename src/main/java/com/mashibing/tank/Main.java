@@ -32,7 +32,7 @@ public class Main {
 		
 		//or you can new a thread to run this
 		
-		Client.INSTANCE.connect();
+//		Client.INSTANCE.connect();
 		
 	}
 

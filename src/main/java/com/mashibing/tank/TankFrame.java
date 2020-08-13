@@ -13,14 +13,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
+import com.mashibing.tank.bullet.Bullet;
 import com.mashibing.tank.net.Client;
-import com.mashibing.tank.net.TankDirChangedMsg;
-import com.mashibing.tank.net.TankStartMovingMsg;
-import com.mashibing.tank.net.TankStopMsg;
+import com.mashibing.tank.net.msg.TankDirChangedMsg;
+import com.mashibing.tank.net.msg.TankStartMovingMsg;
+import com.mashibing.tank.net.msg.TankStopMsg;
 
 public class TankFrame extends Frame {
 	public static final TankFrame INSTANCE = new TankFrame();
@@ -28,12 +28,13 @@ public class TankFrame extends Frame {
 	Random r = new Random();
 
 	Tank myTank = new Tank(r.nextInt(GAME_WIDTH), r.nextInt(GAME_HEIGHT), Dir.DOWN, Group.GOOD, this);
-	List<Bullet> bullets = new ArrayList<>();
+
+	private List<Bullet> bullets = new ArrayList<>();
 	Map<UUID,Tank> tanks = new HashMap<>();
 	List<Explode> explodes = new ArrayList<>();
 	
 	
-	static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+	public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 	
 	public void addBullet(Bullet b) {
 		bullets.add(b);
@@ -105,7 +106,7 @@ public class TankFrame extends Frame {
 		}
 		
 		//java8 stream api
-		tanks.values().stream().forEach((e)->e.paint(g));
+		tanks.values().forEach((e)->e.paint(g));
 		
 		for (int i = 0; i < explodes.size(); i++) {
 			explodes.get(i).paint(g);
@@ -232,7 +233,9 @@ public class TankFrame extends Frame {
 			
 		}
 	}
-
+	public List<Bullet> getBullets() {
+		return bullets;
+	}
 	public Tank getMainTank() {
 		return this.myTank;
 	}
